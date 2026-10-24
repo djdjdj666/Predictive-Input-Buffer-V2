@@ -15,10 +15,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build Mod
+      - name: Build the mod
         id: build
         uses: geode-sdk/build-geode-mod@main
         with:
-          # Токен нужен для скачивания SDK и работы со сторонними API внутри экшена
+          # Мы убрали target, экшен сам поймет, что это Windows
           token: ${{ secrets.GITHUB_TOKEN }}
-          target: win
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build Output
+          path: ${{ steps.build.outputs.build-output }}
