@@ -1,0 +1,24 @@
+name: Build Geode Mod
+
+on:
+  workflow_dispatch: # Позволяет запускать билд вручную кнопкой
+  push:
+    branches:
+      - main # Автоматически запускает билд при любом изменении кода
+
+jobs:
+  build:
+    name: Build for Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Mod
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          bindings: geode-sdk/bindings
+          bindings-ref: main
+          combine: true
+          target: Windows
